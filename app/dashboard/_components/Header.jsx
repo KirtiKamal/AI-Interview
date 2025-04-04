@@ -3,31 +3,44 @@ import { UserButton } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React from 'react'
+import { motion } from 'framer-motion'
 
 function Header() {
-
     const path = usePathname();
-    useEffect(() =>{
 
-    })
+    return (
+        <header className="fixed top-0 left-0 right-0 z-50">
+            {/* Blurred background */}
+            <div className="absolute inset-0 bg-white/80 backdrop-blur-xl"></div>
+            
+            {/* Content */}
+            <div className="relative flex p-4 items-center justify-between">
+                <Link href="/" className="flex items-center">
+                    <Image src={'./logo.svg'} width={160} height={100} alt='logo' className="hover:scale-105 transition-transform duration-300" />
+                </Link>
 
+                <nav className="hidden md:flex items-center gap-6">
+                    <Link href="/dashboard" className={`text-sm font-medium transition-colors hover:text-primary ${path === '/dashboard' ? 'text-primary font-bold' : 'text-gray-600'}`}>
+                        Dashboard
+                    </Link>
+                    <Link href="/dashboard/questions" className={`text-sm font-medium transition-colors hover:text-primary ${path === '/dashboard/questions' ? 'text-primary font-bold' : 'text-gray-600'}`}>
+                        Questions
+                    </Link>
+                    <Link href="/dashboard/upgrade" className={`text-sm font-medium transition-colors hover:text-primary ${path === '/dashboard/upgrade' ? 'text-primary font-bold' : 'text-gray-600'}`}>
+                        Upgrade
+                    </Link>
+                    <Link href="/dashboard/how" className={`text-sm font-medium transition-colors hover:text-primary ${path === '/dashboard/how' ? 'text-primary font-bold' : 'text-gray-600'}`}>
+                        How it works?
+                    </Link>
+                </nav>
 
-
-  return (
-    <div className='flex p-4 items-center justify-between bg-secondary shadow-md'> 
-      <Image src={'./logo.svg'} width={160} height={100} alt='logo' />
-
-      <ul className='hidden md:flex gap-6'>
-        <li className={`hover: text-primary hover:font-bold transition cursor-pointer ${path === '/dashboard' && 'text-primary font-bold'}`}>Dashboard</li>
-        <li className={`hover: text-primary hover:font-bold transition cursor-pointer ${path === '/dashboard/questions' && 'text-primary font-bold'}`}>Questions</li>
-<Link href={'./upgrade'}>        <li className={`hover: text-primary hover:font-bold transition cursor-pointer ${path === '/dashboard/upgrade' && 'text-primary font-bold'}`}>Upgrade</li></Link>
-        <li className={`hover: text-primary hover:font-bold transition cursor-pointer ${path === '/dashboard/how' && 'text-primary font-bold'}`}>How it works ?</li>
-      </ul>
-
-      <UserButton/>
-    </div>
-  )
+                <div className="flex items-center gap-4">
+                    <UserButton afterSignOutUrl="/" />
+                </div>
+            </div>
+        </header>
+    )
 }
 
 export default Header
